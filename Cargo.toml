@@ -1,0 +1,14 @@
+[package]
+name = "fake_type"
+version = "0.1.0"
+authors = ["Borber <borber.drum@gmail.com>"]
+edition = "2021"
+license = "GPL-3.0-or-later"
+description = "Disguise files to another format with great speed, and recover them losslessly."
+homepage = "https://github.com/Borber/fake_type"
+repository = "https://github.com/Borber/fake_type"
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
