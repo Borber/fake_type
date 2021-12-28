@@ -5,6 +5,7 @@ authors = ["Borber <borber.drum@gmail.com>"]
 edition = "2021"
 license = "GPL-3.0-or-later"
 description = "Disguise files to another format with great speed, and recover them losslessly."
+keywords = ["fake", "file"]
 homepage = "https://github.com/Borber/fake_type"
 repository = "https://github.com/Borber/fake_type"
 readme = "README.md"
