@@ -11,13 +11,18 @@ use std::os::windows::fs::FileExt;
 const FAKE_FLAG: &[u8; 64] = b"67ea716879a2881181afb79f9737553ae96ed1d65119551ab416957a01ff0f58";
 const FAKE_HEAD: &[u8; 4] = b"Fake";
 
-/// 前往这个网站查找你需要的类型文件头 hex 值 https://en.wikipedia.org/wiki/List_of_file_signatures
-/// 然后使用tests中的 hex_test 将其转换为 u8 的数组
+/// 前往这个网站查找你需要的类型文件头 hex 值 <https://en.wikipedia.org/wiki/List_of_file_signatures> 然后将其 hex值转换为 u8 的数组 (tests中有实现)
 ///
-/// Go to this website to find the type file header hex value you need https://en.wikipedia.org/wiki/List_of_file_signatures
-/// Then use hex_test in tests to convert it to an array of u8
+/// Go to this website to find the hex value of the type file header you need <https:en.wikipedia.orgwikiList_of_file_signatures> and then convert its hex value to an array of u8 (implemented in tests)
+
+/// gz格式的文件头
+/// gz format file header
 pub const GZ: &[u8; 4] = &[31, 139, 8, 0];
+/// MP4格式的文件头
+/// File header in MP 4 format
 pub const MP4: &[u8; 12] = &[0, 0, 0, 24, 102, 116, 121, 112, 51, 103, 112, 53];
+/// 伪装为txt可将文件头部部分字节直接替换为可读文件字节
+/// Disguised as txt can directly replace part of the file header bytes with readable file bytes
 pub const TXT: &[u8; 73] = b"The life and death of Gouli country, can it avoid misfortune and fortune?";
 
 
