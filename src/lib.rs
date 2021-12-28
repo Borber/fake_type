@@ -3,35 +3,49 @@ use std::{
     fs::{File, OpenOptions},
     path::Path
 };
-use std::io::ErrorKind;
 use std::os::windows::fs::FileExt;
 
+/// 字符串“Borber”的 blake3 哈希值，用于标记伪造文件
+///
 /// The blake3 hash value of string "Borber", use to flag faked file
 const FAKE_FLAG: &[u8; 64] = b"67ea716879a2881181afb79f9737553ae96ed1d65119551ab416957a01ff0f58";
 const FAKE_HEAD: &[u8; 4] = b"Fake";
-const GZ: &[u8; 4] = &[31, 139, 8, 0];
-const MP4: &[u8; 12] = &[0, 0, 0, 24, 102, 116, 121, 112, 51, 103, 112, 53];
-const TXT: &[u8; 73] = b"The life and death of Gouli country, can it avoid misfortune and fortune?";
+
+/// 前往这个网站查找你需要的类型文件头 hex 值 https://en.wikipedia.org/wiki/List_of_file_signatures
+/// 然后使用tests中的 hex_test 将其转换为 u8 的数组
+///
+/// Go to this website to find the type file header hex value you need https://en.wikipedia.org/wiki/List_of_file_signatures
+/// Then use hex_test in tests to convert it to an array of u8
+pub const GZ: &[u8; 4] = &[31, 139, 8, 0];
+pub const MP4: &[u8; 12] = &[0, 0, 0, 24, 102, 116, 121, 112, 51, 103, 112, 53];
+pub const TXT: &[u8; 73] = b"The life and death of Gouli country, can it avoid misfortune and fortune?";
 
 
 /// 改变文件类型
 ///
 /// # 用例
-/// 请看具体实现
+/// ```
+/// let path = Path::new(r"file/test.txt");
+/// let flag = fake_type::check_fake(path)?;
+/// println!("Is it a fake file:{:?}",flag);
+/// if !flag {
+///     fake_type(path, fake_type::GZ)?;
+/// }
+/// ```
 ///
 /// Change file to fake type
 ///
 /// # Examples
-/// Please see the corresponding specific implementation
+/// ```
+/// let path = Path::new(r"file/test.txt");
+/// let flag = fake_type::check_fake(path)?;
+/// println!("Is it a fake file:{:?}",flag);
+/// if !flag {
+///     fake_type(path, fake_type::GZ)?;
+/// }
+/// ```
 ///
-///
-pub fn fake_type(path: &Path, fake_type: &str) -> Result<(), io::Error> {
-    let fake_type_bytes =  match fake_type {
-        "gz" => GZ.to_vec(),
-        "mp4" => MP4.to_vec(),
-        "txt" => TXT.to_vec(),
-        _ => return Err(io::Error::new(ErrorKind::InvalidInput, "This type is not yet supported"))
-    };
+pub fn fake_type(path: &Path, fake_type_bytes: &[u8]) -> Result<(), io::Error> {
     let mut buf = vec![0u8; fake_type_bytes.len()];
     let buf = buf.as_mut_slice();
     let mut f_reader = BufReader::new(File::open(path)?);

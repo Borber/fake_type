@@ -6,7 +6,7 @@ use fake_type::{check_fake, fake_type, restore};
 
 #[test]
 fn how_to_be_txt() -> Result<(), io::Error>{
-    let path = Path::new(r"C:\Users\BORBER\Downloads\Lark-win32_ia32-4.10.16-signed.txt");
+    let path = Path::new(r"file/test.txt");
     println!("Original:");
     read_file(path)?;
     println!("{:?}", b"txt:");
@@ -15,11 +15,11 @@ fn how_to_be_txt() -> Result<(), io::Error>{
 
 #[test]
 fn fake_file_to_test() -> Result<(), io::Error>{
-    let path = Path::new(r"C:\Users\BORBER\Downloads\Lark-win32_ia32-4.10.16-signed.txt");
+    let path = Path::new(r"file/test.txt");
     let flag = check_fake(path)?;
     println!("Is it a fake file:{:?}",flag);
     if !flag {
-        fake_type(path, "txt")?;
+        fake_type(path, fake_type::TXT)?;
     }
     let flag = check_fake(path)?;
     println!("Is it a fake file:{:?}",flag);
@@ -28,7 +28,7 @@ fn fake_file_to_test() -> Result<(), io::Error>{
 
 #[test]
 fn restore_file_to_test() -> Result<(), io::Error>{
-    let path = Path::new(r"C:\Users\BORBER\Downloads\Lark-win32_ia32-4.10.16-signed.txt");
+    let path = Path::new(r"file/test.txt");
     let flag = check_fake(path)?;
     println!("Is it a fake file:{:?}",flag);
     if flag {
@@ -42,13 +42,13 @@ fn restore_file_to_test() -> Result<(), io::Error>{
 #[test]
 fn fake_type_test() -> Result<(), io::Error> {
     // println!("{:?}", fake_type_to_gz(Path::new("file/test.tar.gz"))?);
-    let path = Path::new("file/test.7z");
+    let path = Path::new("file/test.txt");
     println!("Original:");
     read_file(path)?;
     let flag = check_fake(path)?;
     println!("Is it a fake file:{:?}",flag);
     if !flag {
-        fake_type(path, "mp4")?;
+        fake_type(path, fake_type::GZ)?;
     }
     println!("Conversion:");
     read_file(path)?;
