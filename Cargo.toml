@@ -7,6 +7,7 @@ license = "GPL-3.0-or-later"
 description = "Disguise files to another format with great speed, and recover them losslessly."
 keywords = ["fake", "file"]
 homepage = "https://github.com/Borber/fake_type"
+documentation = "https://docs.rs/fake_type/"
 repository = "https://github.com/Borber/fake_type"
 readme = "README.md"
 
