@@ -41,11 +41,12 @@ pub fn fake(path: &Path, flag: &[u8], f_type: Type) -> Result<(), io::Error> {
     while suffix.len() > 16 {
         suffix.pop();
     }
-    let mut head = [0u8; 48]; // 原文件头及冗余信息
-    let mut f_reader = BufReader::new(File::open(path).expect("打开文件失败"));
-    let f_writer = OpenOptions::new().write(true).open(path).expect("以可写方式打开文件失败");
+    // 原文件头及冗余信息
+    let mut head = [0u8; 48];
+    let mut f_reader = BufReader::new(File::open(path)?);
+    let f_writer = OpenOptions::new().write(true).open(path)?;
     f_reader.read_exact(&mut head)?;
-    f_writer.seek_write(f_type.bytes.as_slice(), 0).expect("写入失败");
+    f_writer.seek_write(f_type.bytes.as_slice(), 0)?;
     let offset = f_reader.seek(SeekFrom::End(0))?;
     let data = [flag, suffix.as_slice(), &head].concat();
     f_writer.seek_write(data.as_slice(), offset)?;
